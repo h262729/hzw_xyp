@@ -1,0 +1,72 @@
+package com.hzw.xyp.base.controller;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.hzw.xyp.base.tools.StringTools;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * 基础controller，对一些常用的请求操作进行封装
+ */
+public class BaseAction {
+
+    /**
+     * 获取request参数数据 --返回String
+     */
+    public String getParam(HttpServletRequest request, String key){
+        return request.getParameter("key");
+    }
+
+    /**
+     * 获取request参数数据 --返回String
+     */
+    public String getParam(HttpServletRequest request, String key, String defaultValue){
+        return StringTools.isEmpty(request.getParameter(key))? defaultValue : request.getParameter(key);
+    }
+
+    /**
+     * 获取request参数数据 --返回int
+     */
+    public int getParam(HttpServletRequest request, String key, int defaultValue){
+        try{
+            return StringTools.isEmpty(request.getParameter(key))? defaultValue : Integer.valueOf(request.getParameter(key));
+        }catch (Exception e){
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 获取request参数数据 --返回double
+     */
+    public double getParam(HttpServletRequest request, String key, double defaultValue){
+        try {
+            return StringTools.isEmpty(request.getParameter(key))? defaultValue : Double.valueOf(request.getParameter(key));
+        }catch (Exception e){
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 获取request参数数据 --返回jsonObject
+     */
+    public JSONObject getParam(HttpServletRequest request, String key, JSONObject defaultValue){
+        try{
+            String value = request.getParameter(key);
+            return StringTools.isEmpty(value)? defaultValue : JSONObject.parseObject(value);
+        }catch (Exception e){
+            return defaultValue;
+        }
+    }
+
+    /**
+     * 获取request参数数据 --返回jsonArray
+     */
+    public JSONArray getParam(HttpServletRequest request, String key, JSONArray defaultValue){
+        try{
+            return StringTools.isEmpty(request.getParameter(key))? defaultValue : JSONArray.parseArray(request.getParameter(key));
+        }catch (Exception e){
+            return defaultValue;
+        }
+    }
+}
