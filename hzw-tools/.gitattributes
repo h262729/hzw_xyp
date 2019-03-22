@@ -1,0 +1,6 @@
+#Windows
+*.bat aol=crlf
+*.txt aol=crlf
+#Unix
+*.java aol=lf
+*.sh aol=lf
