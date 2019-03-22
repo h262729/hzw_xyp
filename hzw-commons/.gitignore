@@ -23,3 +23,10 @@
 /nbdist/
 /.nb-gradle/
 /build/
+
+### MAC ###
+.DS_Store
+
+### Other ###
+logs/
+temp/
