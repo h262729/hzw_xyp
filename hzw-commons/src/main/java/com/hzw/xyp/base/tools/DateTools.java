@@ -13,23 +13,23 @@ public class DateTools {
     public static final String format2="yyyy-MM-dd HH:mm:ss";
     public static final String format3="yyyy-MM-dd HH:mm";
 
-    private static final SimpleDateFormat dateformat1 = new SimpleDateFormat(format1);
-    private static final SimpleDateFormat dateformat2 = new SimpleDateFormat(format2);
-    private static final SimpleDateFormat dateformat3 = new SimpleDateFormat(format3);
+    public static final SimpleDateFormat dateFormat1 = new SimpleDateFormat(format1);
+    public static final SimpleDateFormat dateFormat2 = new SimpleDateFormat(format2);
+    public static final SimpleDateFormat dateFormat3 = new SimpleDateFormat(format3);
 
     private static final Map<String, SimpleDateFormat> formats = new HashMap<String, SimpleDateFormat>();
 
     static{
-        formats.put(format1, dateformat1);
-        formats.put(format2, dateformat2);
-        formats.put(format3, dateformat3);
+        formats.put(format1, dateFormat1);
+        formats.put(format2, dateFormat2);
+        formats.put(format3, dateFormat3);
     }
 
     /**
      * 返回时间字符串 --默认格式：yyyy-MM-dd HH:mm:ss
      */
     public static String toString(Date date){
-        return date != null? dateformat2.format(date) : null;
+        return date != null? dateFormat2.format(date) : null;
     }
 
     /**

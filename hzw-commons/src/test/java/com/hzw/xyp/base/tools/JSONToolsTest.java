@@ -6,8 +6,24 @@ import com.alibaba.fastjson.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JSONToolsTest {
+    private static final Logger logger = LoggerFactory.getLogger(JSONToolsTest.class);
+
+    @Test
+    public void test03(){
+        String str = "[1,23,4]";
+        JSON json = JSONTools.objToJson(str);
+        if(json instanceof JSONObject){
+            JSONObject jsonObject = (JSONObject) json;
+            logger.info("结果22:" + jsonObject );
+        }else{
+            logger.info("结果444:" + null );
+        }
+
+    }
 
     @Test
     public void test02(){
@@ -45,7 +61,7 @@ public class JSONToolsTest {
     @Test
     public void test01(){
         String jsonStr = "[1,2,3,{'aa':'bb'}]";
-        JSON json = JSONTools.toJson(jsonStr);
+        JSON json = JSONTools.objToJson(jsonStr);
         System.out.println(json.toJSONString());
     }
 

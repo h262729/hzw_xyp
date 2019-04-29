@@ -23,18 +23,18 @@ public class SqlQuery {
     private String groupBy;
     private static Map<String, Object> paramMap = new HashMap<String, Object>();   //条件参数
 
-    private static Map<String, String> whereTabMap = new HashMap<>();
-    {
-        whereTabMap.put("eq", "= :txt");
-        whereTabMap.put("notEq", "!= :txt");
-        whereTabMap.put("like", "LIKE CONCAT('%',:txt,'%')");
-        whereTabMap.put("rightLike", "LIKE CONCAT('%',:txt)");
-        whereTabMap.put("leftLike", "LIKE CONCAT(:txt,'%')");
-        whereTabMap.put("notLike", "NOT LIKE CONCAT('%',:txt,'%')");
-        whereTabMap.put("notRightLike", "NOT LIKE CONCAT('%',:txt)");
-        whereTabMap.put("notLeftLike", "NOT LIKE CONCAT(:txt,'%')");
-        whereTabMap.put("in", "IN :txt");
-        whereTabMap.put("notIn", "NOT IN :txt");
+    public static Map<String, String> whereTabMap = new HashMap<>();
+    static {
+        whereTabMap.put("eq", " = :txt");
+        whereTabMap.put("neq", "!= :txt");
+        whereTabMap.put("like", " LIKE CONCAT('%',:txt,'%')");
+        whereTabMap.put("rightLike", " LIKE CONCAT('%',:txt)");
+        whereTabMap.put("leftLike", " LIKE CONCAT(:txt,'%')");
+        whereTabMap.put("notLike", " NOT LIKE CONCAT('%',:txt,'%')");
+        whereTabMap.put("notRightLike", " NOT LIKE CONCAT('%',:txt)");
+        whereTabMap.put("notLeftLike", " NOT LIKE CONCAT(:txt,'%')");
+        whereTabMap.put("in", " IN :txt");
+        whereTabMap.put("notIn", " NOT IN :txt");
     }
 
     private SqlQuery(){

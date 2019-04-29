@@ -47,6 +47,13 @@
             <scope>test</scope>
         </dependency>
         <!-- junit end -->
+
+        <!-- apache start -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
+        <!-- apache end -->
     </dependencies>
 
 </project>

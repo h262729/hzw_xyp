@@ -2,9 +2,12 @@ package com.hzw.xyp.base.dao;
 
 
 import com.alibaba.fastjson.JSONArray;
+import com.hzw.xyp.base.tools.JSONTools;
+import com.hzw.xyp.base.tools.OtherTools;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +21,6 @@ public class QueryResultData implements Serializable {
     private long totalCount; // 结果总数
     private int pageCount;  //  分页数量
     private List<Map<String, Object>> rows = new ArrayList();  // 查询结果
-    private JSONArray arrays = new JSONArray(); // 查询结果 -- jsonArray格式
 
     /**
      * 构造函数 -- 查询出所有的结果
@@ -37,6 +39,7 @@ public class QueryResultData implements Serializable {
      */
     public QueryResultData(List<Map<String, Object>> rows, int pageNum, int pageSize, long totalCount){
         if(rows != null){
+            OtherTools.underlineToHumpCase(rows);   // 下划线转驼峰
             this.rows.addAll(rows);
         }
         this.pageSize = pageSize;
@@ -53,7 +56,9 @@ public class QueryResultData implements Serializable {
      * @param totalCount    总数
      */
     public QueryResultData(JSONArray arrays, int pageNum, int pageSize, long totalCount){
-        this.arrays.addAll(arrays);
+        List<Map<String, Object>> rows = JSONTools.toList(arrays);
+        OtherTools.underlineToHumpCase(rows);   // 下划线转驼峰
+        this.rows.addAll(rows);
         this.pageSize = pageSize;
         this.pageNum = pageNum;
         this.totalCount = totalCount;
@@ -74,10 +79,6 @@ public class QueryResultData implements Serializable {
 
     public List<Map<String, Object>> getRows() {
         return rows;
-    }
-
-    public JSONArray getArrays() {
-        return arrays;
     }
 
     public int getPageCount(){

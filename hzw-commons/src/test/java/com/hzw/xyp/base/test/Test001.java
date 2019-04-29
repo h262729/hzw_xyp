@@ -12,6 +12,15 @@ import java.util.Map;
 public class Test001 {
 
     @Test
+    public void test002(){
+        Object[] keyAndValues = new Object[2];
+        for(int i = 0; i < keyAndValues.length; i+=2){
+            System.out.println("i = " + i);
+            Object obj = keyAndValues[i+1];
+        }
+    }
+
+    @Test
     public void test001(){
         JSONObject json = new JSONObject();
         json.put("name", "年时");

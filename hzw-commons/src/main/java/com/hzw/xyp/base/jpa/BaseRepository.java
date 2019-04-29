@@ -1,5 +1,6 @@
 package com.hzw.xyp.base.jpa;
 
+import com.alibaba.fastjson.JSONObject;
 import org.hibernate.Session;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -62,4 +63,51 @@ public interface BaseRepository<T, ID extends Serializable> extends JpaRepositor
      * @return
      */
     int countAsSql(String sql, Map params);
+
+    /**
+     * 获取实体类数据
+     */
+    T getByProperties(Object... keyAndValues);
+
+    /**
+     * 获取所有符合条件的实体类数据
+     */
+    List<T> getAllByProperties(Object... keyAndValues);
+
+    /**
+     * 判断数据是否已存在
+     * @param keyAndValues  判断条件
+     * @return
+     */
+    boolean exist(Object... keyAndValues);
+
+    /**
+     * 判断数据是否已存在，排除当前id之外
+     * @param id
+     * @param keyAndValues
+     * @return
+     */
+    boolean existExcludeId(ID id, Object... keyAndValues);
+
+    /**
+     * 自定义获取实体
+     * @param id
+     * @return
+     */
+    T get(ID id);
+
+    /**
+     * 自定义保存方法，替换掉jpa自带的save()方法
+     * @param bean
+     */
+    void saveAndUpdate(T bean) throws Exception;
+
+    /**
+     * 批量更新数据
+     * @param name  目标字段
+     * @param value 更新值
+     * @param keyAndValues  条件参数
+     * @return
+     */
+    int updateAllByProperties(String name, Object value, Object... keyAndValues);
 }
