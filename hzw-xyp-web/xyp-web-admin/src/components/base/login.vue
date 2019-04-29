@@ -56,7 +56,7 @@
       login : function(){
         // 登录
         console.log("data", JSON.stringify(this.data));
-        var $this = this;
+        let $this = this;
         this.$axios.post("login", this.data).then(function(result){
           window.localStorage.setItem("user", JSON.stringify(result));
           $this.FUNCS.success("登录成功");

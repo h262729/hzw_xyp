@@ -9,7 +9,7 @@
 ## 前端技术栈
 
 ***
-> _Vue + Vue-router + axios_
+> _Vue + Vue-index + axios_
 
 > _[ElementUI](http://element-cn.eleme.io/#/zh-CN/component/installation)_
 ***

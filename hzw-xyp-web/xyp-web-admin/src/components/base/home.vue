@@ -10,18 +10,21 @@
           </div>
           <div class="menu">
             <el-menu
-              default-active="1-1"
+              :default-active="activity_tab"
               class="el-menu-vertical-demo"
               background-color="#545c64"
               text-color="#fff"
               active-text-color="#ffd04b">
-              <el-submenu index="1">
+              <el-submenu v-for="(item, index) in asideMenu" :key="item.id" :index="item.code">
                 <template slot="title">
                   <i class="el-icon-location"></i>
-                  <span>管理员管理</span>
+                  <span>{{item.name || "未知"}}</span>
                 </template>
-                <el-menu-item index="1-1">管理员列表</el-menu-item>
-                <el-menu-item index="1-2">管理员列表222</el-menu-item>
+                <el-menu-item v-for="(child, index) in item.children"
+                              :index="child.code" :key="child.id"
+                              @click="selectAsideMenu(child)">
+                  {{child.name || "未知菜单"}}
+                </el-menu-item>
               </el-submenu>
             </el-menu>
           </div>
@@ -33,15 +36,16 @@
         <!-- 页眉 -->
         <el-header>
           <div id="header">
+            <!-- 顶部菜单 -->
             <div class="header-menu-left">
               <el-menu
-                :default-active="activeIndex"
+                :default-active="active_header_menu_index"
                 mode="horizontal"
                 background-color="#409eff"
                 text-color="#fff"
-                active-text-color="#FF5722">
-                <!--<el-menu-item index="1">项目管理</el-menu-item>-->
-                <el-menu-item index="1">基础管理</el-menu-item>
+                active-text-color="#FF5722"
+                @select="selectHeaderMenu">
+                <el-menu-item v-for="(menu, index) in headerMenu" :index="menu.code" :key="menu.id">{{menu.name || "未知菜单"}}</el-menu-item>
               </el-menu>
             </div>
             <div class="header-menu-right">
@@ -69,20 +73,21 @@
         <!-- 内容显示区域 -->
         <el-main>
           <div id="content">
-            <el-tabs v-model="activity_tab" type="card" @tab-click="clickTab" @tab-remove="removeTab">
-              <el-tab-pane label="首页">
-                <router-view name="adminHome"></router-view>
-              </el-tab-pane>
+            <el-tabs v-model="activity_tab" type="card" @tab-remove="removeTab" @tab-click="selectTab">
               <el-tab-pane
                 v-for="(item, index) in tabs"
                 :key="item.code"
-                :label="item.title"
+                :label="item.name"
                 :name="item.code"
-                closable
+                :closable="index != 0"
               >
-                <router-view :name="item.content"></router-view>
               </el-tab-pane>
             </el-tabs>
+            <div>
+              <keep-alive :include="cachePages">
+                <router-view></router-view>
+              </keep-alive>
+            </div>
           </div>
         </el-main>
       </el-container>
@@ -91,62 +96,172 @@
 </template>
 
 <script>
+  import Menu from "@/assets/common/menu.js";
+  import {mapState} from "vuex";
+
   export default {
     data() {
       return {
-        activeIndex: '1',
         iconStatus: false,
         user:{},
-        activity_tab: '1',
-        tabs: [{
-          title: 'Tab 1',
-          code: '1',
-          content: 'adminEdit'
-        }, {
-          title: 'Tab 2',
-          code: '2',
-          content: 'adminList'
-        }]
+        activity_tab: "home",
+        active_header_menu_index: '1',
+        headerMenu: [], // 顶部菜单
+        asideMenu: [],  // 侧边栏菜单
       };
     },
     created(){
       // 获取登录用户信息
-      console.log("当前登录用户", window.localStorage.getItem("user"));
       this.user = JSON.parse(window.localStorage.getItem("user") || {});
-      console.log("当前登录用户", this.user);
 
-      //this.$router.push("/home/admin-edit");
+      // 菜单获取
+      this.getMenu();
     },
     methods: {
-      addTab(targetName) {
-        let newTabName = ++this.tabIndex + '';
-        this.editableTabs2.push({
-          title: 'New Tab',
-          name: newTabName,
-          content: 'New Tab content'
+      getMenu(menuIndex){  // 菜单获取
+        this.headerMenu = Menu.headerMenu;
+        let asideMenu = Menu.asideMenu;
+
+        let active_header_menu = {};
+        this.headerMenu.forEach(menu => {
+          if(menuIndex && menu.code === menuIndex){
+            active_header_menu = menu;
+          }
+          if(!menuIndex && menu.enabled === 1){
+            active_header_menu = menu;
+          }
         });
-        this.editableTabsValue2 = newTabName;
+        if(!active_header_menu){
+          return false;
+        }
+        this.active_header_menu_index = active_header_menu.code;
+        console.log("当前激活的顶部菜单", active_header_menu);
+
+        this.asideMenu = asideMenu[active_header_menu.code];
+        console.log("获取到的侧边栏菜单", this.asideMenu);
+
+        this.activity_tab = active_header_menu.code;
+        // 初始化并跳转到首页
+        let _tabs = [{name:"首页", code:active_header_menu.code, routerLink:active_header_menu.home}];
+        // 更新store数据
+        this.$store.commit('replaceTabs', _tabs);
+        this.$store.commit('replaceCachePages', []);
+
+        this.$router.replace( (active_header_menu.baseUrl || "/home/admin") + "/" + active_header_menu.home);
       },
-      removeTab(targetName) {
-        let tabs = this.editableTabs2;
-        let activeName = this.editableTabsValue2;
-        if (activeName === targetName) {
-          tabs.forEach((tab, index) => {
-            if (tab.name === targetName) {
-              let nextTab = tabs[index + 1] || tabs[index - 1];
+
+      selectHeaderMenu(menuIndex){ // 顶部菜单选中事件
+        this.getMenu(menuIndex);
+      },
+
+      selectAsideMenu(menu){ // 侧边栏菜单选中事件
+        console.log("侧边栏菜单选中事件", menu);
+        // 添加新的标签页
+        let _index = -1;
+        let _tabs = this.tabs;
+        let _cachePages = this.cachePages;
+
+        _tabs.forEach((tab, index) => {
+          if(tab.code === menu.code){
+            _index = index;
+          }
+        });
+        if(_index === -1){
+          _tabs.push(menu);
+        }else{  // 更新标签信息，防止重复打开同一页面
+          _tabs[_index] = menu
+        }
+
+        // 缓存页面组
+        let hasPage = false;
+        _cachePages.forEach(page => {
+          if(page === menu.routerLink){
+            hasPage = true;
+          }
+        });
+        if(!hasPage){
+          _cachePages.push(menu.routerLink);
+        }
+
+        this.activity_tab = menu.code;
+        // 更新store数据
+        this.$store.commit('replaceTabs', _tabs);
+        this.$store.commit('replaceCachePages', _cachePages);
+
+        // 跳转路由
+        this.changeRoute(menu);
+      },
+
+      removeTab(tabName) {  // 删除标签页
+        let _tabs = this.tabs;
+        let _cachePages = this.cachePages;
+        let activeName = this.activity_tab;
+        if (activeName === tabName) {
+          _tabs.forEach((tab, index) => {
+            if (tab.code === tabName) {
+                let nextTab = _tabs[index + 1] || _tabs[index - 1];
               if (nextTab) {
-                activeName = nextTab.name;
+                activeName = nextTab.code;
               }
             }
           });
         }
-        this.editableTabsValue2 = activeName;
-        this.editableTabs2 = tabs.filter(tab => tab.name !== targetName);
+        let removeTab = null; // 要删除的标签页
+        let activityTab = null; // 当前显示的标签页
+        _tabs = _tabs.filter(tab => {
+          if(tab.code === activeName){
+            activityTab = tab;
+          }
+          if(tab.code !== tabName){
+            return this;
+          }else{
+            removeTab = tab;
+          }
+        });
+        if(removeTab){  // 将标签页从缓存页面组中删除
+          _cachePages = _cachePages.filter(page => page !== removeTab.routerLink);
+        }
+
+        this.activity_tab = activeName;
+        // 更新store数据
+        this.$store.commit('replaceTabs', _tabs);
+        this.$store.commit('replaceCachePages', _cachePages);
+
+        // 移除存在sessionStorage中的页面数据
+        this.FUNCS.clearRouteData(removeTab);
+
+        if(activityTab){  // 切换当前页面的显示路由
+          this.changeRoute(activityTab);
+        }
       },
-      clickTab(tab, event){ // 点击标签
-        console.log(tab, event);
+
+      selectTab(tab, event){  // 选中标签页 | 切换显示显示内容
+        let _tab = this.tabs[tab.index] || {};
+        this.changeRoute(_tab);
+      },
+
+      changeRoute(_tab){  // 改变路由
+        if(_tab.params){
+          this.$router.replace({name: _tab.routerLink, params: _tab.params});
+        }else if(_tab.query){
+          this.$router.replace({path: _tab.routerLink, query: _tab.query});
+        }else{
+          this.$router.replace(_tab.routerLink);
+        }
       }
-    }
+    },
+    computed:{
+      ...mapState({
+        tabs: state => state.tabs || [], // 标签组
+        cachePages: state => state.cachePages || [],  // 缓存页面
+      })
+    },
+    provide(){
+      return{
+        selectAsideMenu:this.selectAsideMenu,
+        removeTab:this.removeTab, // 删除标签页
+      }
+    },
   }
 </script>
 
@@ -161,6 +276,7 @@
   }
   .el-main{
     padding: 0px;
+    background: #c0c0c017;
   }
 
   #aside-menu{
@@ -205,7 +321,7 @@
     float: left;
     margin-left: 15px;
   }
-  .el-dropdown-link {
+  #header .el-dropdown-link {
     cursor: pointer;
     color: #fff;
   }

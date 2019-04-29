@@ -5,9 +5,11 @@ import VueRouter from 'vue-router';
 // 导入app根组件
 import app from './App';
 // 导入自定义路由
-import router from './router/router';
+import router from './router';
 // 导入自定义配置
 import axios from './assets/common/axiosHttp';
+//引入 Vuex store
+import store from './store'
 
 // 导入element-ui
 import ElementUI from 'element-ui';
@@ -34,6 +36,7 @@ var vm = new Vue({
   el: "#app",
   render: c => c(app),
   router,
+  store,
   methods: {
     toLogin: function () {
       // 判断本地是否存有当前登录用户信息，没有就跳转到登录页面

@@ -60,7 +60,7 @@
         },
         clickTab(tab){ // 点击标签
           console.log("被选中的标签", tab);
-          //this.$router.push("/admin/home");
+          //this.$index.push("/admin/home");
 
         }
       }
