@@ -1,5 +1,5 @@
 server:
-  port: 8010
+  port: 8300
   servlet:
     session:
       timeout: 3600
@@ -10,8 +10,8 @@ spring:
   datasource:
     druid:
       url: jdbc:mysql://120.78.184.188:3306/hzw_xyp?useOldAliasMetadataBehavior=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
-      username: 
-      password: 
+      username: root
+      password: h262729n
       initial-size: 1
       min-idle: 1
       max-active: 20

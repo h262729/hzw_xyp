@@ -17,6 +17,11 @@ public class AdminServiceTest {
     private AdminService adminService;
 
     @Test
+    public void login(){
+        //adminService.login(null,null);
+    }
+
+    @Test
     public void queryTest(){
         JSONObject filter = new JSONObject();
         filter.put("ids", new Integer[]{3,5});
