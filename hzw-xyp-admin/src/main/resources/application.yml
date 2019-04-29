@@ -11,7 +11,7 @@ spring:
     druid:
       url: jdbc:mysql://120.78.184.188:3306/hzw_xyp?useOldAliasMetadataBehavior=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
       username: root
-      password: h262729n
+      password: 
       initial-size: 1
       min-idle: 1
       max-active: 20
