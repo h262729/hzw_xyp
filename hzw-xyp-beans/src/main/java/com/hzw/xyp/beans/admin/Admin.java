@@ -12,7 +12,7 @@ import java.util.Date;
 public class Admin implements Serializable {
 
     //管理员表
-    private long id;
+    private Long id;
     //真实姓名
     private String name;
     //昵称
@@ -26,7 +26,7 @@ public class Admin implements Serializable {
     //头像
     private String imgs;
     //有效状态
-    private Integer status;
+    private Integer status = 1;
     //更新时间
     private Date updateTime;
     //创建时间
@@ -34,7 +34,7 @@ public class Admin implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -83,7 +83,7 @@ public class Admin implements Serializable {
         return createTime;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

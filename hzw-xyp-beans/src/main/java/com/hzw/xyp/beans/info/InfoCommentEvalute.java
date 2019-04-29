@@ -7,8 +7,8 @@ import java.io.Serializable;
  * 实体类 - 资讯评论点赞/被踩
  */
 @Entity
-@Table(name = "t_info_commont_evalute")
-public class InfoCommontEvalute implements Serializable {
+@Table(name = "t_info_comment_evalute")
+public class InfoCommentEvalute implements Serializable {
 
     //资讯评论点赞表
     private long id;
@@ -17,11 +17,11 @@ public class InfoCommontEvalute implements Serializable {
     //所属目标id
     private long targetId;
     //点赞数量
-    private Integer goodNum;
+    private Integer goodNum = 0;
     //被踩数量
-    private Integer badNum;
+    private Integer badNum = 0;
     //有效状态
-    private Integer status;
+    private Integer status = 1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

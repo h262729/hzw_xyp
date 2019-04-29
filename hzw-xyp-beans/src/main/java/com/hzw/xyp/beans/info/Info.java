@@ -16,7 +16,7 @@ public class Info implements Serializable {
     //资讯标题
     private String title;
     //所属分类id
-    private long typeId;
+    private long typeId = -1;
     //拥有标签集ids(:xx:xx:)
     private String labelIds;
     //资讯内容
@@ -26,7 +26,7 @@ public class Info implements Serializable {
     //来源
     private String source;
     //是否为管理员创建
-    private Integer createIsAdmin;
+    private Integer createIsAdmin = 0;
     //创建人id
     private long createUserId;
     //创建人名称
@@ -34,7 +34,7 @@ public class Info implements Serializable {
     //扩展信息
     private String props;
     //有效状态
-    private Integer status;
+    private Integer status = 1;
     //更新时间
     private Date updateTime;
     //创建时间

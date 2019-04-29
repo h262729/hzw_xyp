@@ -20,7 +20,7 @@ public class Type implements Serializable {
     //排序
     private Integer seq;
     //有效状态
-    private Integer status;
+    private Integer status = 1;
     //更新时间
     private Date updateTime;
     //创建时间

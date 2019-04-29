@@ -14,13 +14,13 @@ public class Label implements Serializable {
     //标签表
     private long id;
     //所属分类id
-    private long typeId;
+    private long typeId = -1;
     //标签名称
     private String name;
     //是否为管理员创建
-    private Integer createIsAdmin;
+    private Integer createIsAdmin = 0;
     //有效状态
-    private Integer status;
+    private Integer status = 1;
     //更新时间
     private Date updateTime;
     //创建时间
