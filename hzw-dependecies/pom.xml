@@ -33,6 +33,7 @@
         <junit.version>4.12</junit.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <springfox-swagger2-ui.version>2.9.2</springfox-swagger2-ui.version>
+        <apache-commons-beanutils>1.9.3</apache-commons-beanutils>
     </properties>
 
     <dependencyManagement>
@@ -107,6 +108,14 @@
                 <version>${springfox-swagger2-ui.version}</version>
             </dependency>
             <!-- swagger end -->
+
+            <!-- apache start -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${apache-commons-beanutils}</version>
+            </dependency>
+            <!-- apache end -->
         </dependencies>
     </dependencyManagement>
 
