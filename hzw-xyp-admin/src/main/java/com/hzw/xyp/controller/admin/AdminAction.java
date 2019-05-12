@@ -2,10 +2,9 @@ package com.hzw.xyp.controller.admin;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.hzw.xyp.base.controller.BaseAction;
-import com.hzw.xyp.base.controller.ResponseResult;
-import com.hzw.xyp.base.dao.QueryResultData;
-import com.hzw.xyp.beans.admin.Admin;
+import com.hzw.base.controller.BaseAction;
+import com.hzw.base.controller.ResponseResult;
+import com.hzw.base.dao.QueryResultData;
 import com.hzw.xyp.service.admin.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +27,11 @@ public class AdminAction extends BaseAction {
      * 列表查询
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public void query(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        JSONObject filter = this.getParam(request, "filter", new JSONObject());
-        Integer pageSize = this.getParam(request, "pageSize", 10);
-        Integer pageNum = this.getParam(request, "pageNum", 1);
+    public void query(HttpServletRequest request, HttpServletResponse response,
+                      @RequestParam("filter")String filterStr,
+                      @RequestParam("pageSize")Integer pageSize,
+                      @RequestParam("pageNum")Integer pageNum) throws Exception {
+        JSONObject filter = JSONObject.parseObject(filterStr);
         QueryResultData result = service.query(filter, pageNum, pageSize);
         ResponseResult.create(result).blacks("pwd").print(response);
     }
@@ -41,7 +41,7 @@ public class AdminAction extends BaseAction {
      */
     @GetMapping("/get")
     public void get(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        long id = this.getParamByLong(request, "id", -1L);
+        Long id = this.getParamByLong(request, "id", -1L);
         logger.info("获取实体数据：" + id);
         JSONObject beanJson = service.get(id);
         ResponseResult.create()
@@ -55,8 +55,8 @@ public class AdminAction extends BaseAction {
      */
     @PostMapping
     public void save(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        logger.info("保存数据 ：" + JSONObject.toJSONString(this.getPostData(request)));
         JSONObject json = this.getPostData(request);
+        logger.info("保存数据 ：" + json);
         JSONObject beanJson = service.save(json);
         ResponseResult.create()
                 .put("beanData", beanJson)
@@ -71,8 +71,7 @@ public class AdminAction extends BaseAction {
      * @throws Exception
      */
     @PostMapping("/pwd/init")
-    public void initPwd(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Long id = this.getPostData(request, "id", -1);
+    public void initPwd(HttpServletRequest request, HttpServletResponse response, @RequestParam("id") Long id) throws Exception {
         service.initPwd(id);
         ResponseResult.create()
                 .put("message", "密码初始化成功")

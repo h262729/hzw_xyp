@@ -18,7 +18,7 @@ public class Type implements Serializable {
     //分类名称
     private String name;
     //排序
-    private Integer seq;
+    private Integer seq = 0;
     //有效状态
     private Integer status = 1;
     //更新时间

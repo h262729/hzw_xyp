@@ -12,16 +12,11 @@
     <description>馨语阁项目的管理端</description>
 
     <parent>
-        <groupId>com.hzw.xyp</groupId>
-        <artifactId>hzw-dependecies</artifactId>
+        <groupId>com.hzw</groupId>
+        <artifactId>hzw-dependents</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
-
-    <properties>
-        <hzw-xyp-beans.version>1.0.0-SNAPSHOT</hzw-xyp-beans.version>
-        <hzw-commons.version>1.0.0-SNAPSHOT</hzw-commons.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -65,28 +60,18 @@
         </dependency>
         <!-- sqlTools end -->
 
-        <!-- swagger begin -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
-        <!-- swagger end -->
-
         <!-- 个人项目 begin -->
         <dependency>
             <groupId>com.hzw.xyp</groupId>
             <artifactId>hzw-xyp-beans</artifactId>
-            <version>${hzw-xyp-beans.version}</version>
         </dependency>
-
         <dependency>
-            <groupId>com.hzw.xyp</groupId>
+            <groupId>com.hzw</groupId>
             <artifactId>hzw-commons</artifactId>
-            <version>${hzw-commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hzw</groupId>
+            <artifactId>hzw-web-base</artifactId>
         </dependency>
         <!-- 个人项目 end -->
     </dependencies>

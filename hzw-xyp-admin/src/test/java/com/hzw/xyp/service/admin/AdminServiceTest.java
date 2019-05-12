@@ -1,7 +1,7 @@
 package com.hzw.xyp.service.admin;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hzw.xyp.base.dao.QueryResultData;
+import com.hzw.base.dao.QueryResultData;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

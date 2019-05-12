@@ -1,0 +1,13 @@
+BodyReaderHttpServletRequestWrapper
+ChannelFilter
+LogInterceptor
+InterceptorConfig
+
+这3个类都是为了能够在request中获取到 传入的值，
+但是目前发现这种做法有点不合理，里面是对请求内容进行进入复制一份，如果在请求量高的情况下，这就很消耗系统资源了
+
+20190507 内容追加
+现在居然莫名其妙又可以使用request获取内容了
+
+20190507 内容追加
+找到原因了，request获取内容 和 注解获取参数只能2选一

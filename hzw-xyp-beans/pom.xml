@@ -12,8 +12,8 @@
     <description>项目实体类</description>
 
     <parent>
-        <groupId>com.hzw.xyp</groupId>
-        <artifactId>hzw-dependecies</artifactId>
+        <groupId>com.hzw</groupId>
+        <artifactId>hzw-dependents</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>

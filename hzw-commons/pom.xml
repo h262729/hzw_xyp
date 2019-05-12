@@ -3,7 +3,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.hzw.xyp</groupId>
     <artifactId>hzw-commons</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -12,8 +11,8 @@
     <description>管理公用的工具类</description>
 
     <parent>
-        <groupId>com.hzw.xyp</groupId>
-        <artifactId>hzw-dependecies</artifactId>
+        <groupId>com.hzw</groupId>
+        <artifactId>hzw-dependents</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>

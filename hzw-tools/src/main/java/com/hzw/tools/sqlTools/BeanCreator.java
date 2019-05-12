@@ -20,17 +20,25 @@ import org.apache.commons.logging.LogFactory;
  */
 public class BeanCreator {
 	//表名
-	public static String tableName = "t_user";
+	public static String tableName = "b_image";
 
 	public static String idb = "hzw_xyp";
 	public static String url = "jdbc:mysql://120.78.184.188:3306/";
-	public static String dbUser = "";
-	public static String password = "";
+	public static String dbUser = "root";
+	public static String password = "h262729n";
 	
 	static {
 		url = url + idb + "?useSSL=false";
 	}
+/*
+	public static String url = "jdbc:mysql://127.0.0.1:3306/my_activiti002";
+	public static String dbUser = "root";
+	public static String password = "root";
 
+	public static String url = "jdbc:mysql://120.79.47.75:3306/hzw_mall";
+	public static String dbUser = "root";
+	public static String password = "h262729n";
+*/
 	private static String getName(String colName) {
 		String[] str = colName.split("_");
 		if (str.length < 2) {

@@ -11,12 +11,20 @@ spring:
     druid:
       url: jdbc:mysql://120.78.184.188:3306/hzw_xyp?useOldAliasMetadataBehavior=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
       username: root
-      password: 
+      password: h262729n
       initial-size: 1
       min-idle: 1
       max-active: 20
       test-on-borrow: true
       driver-class-name: com.mysql.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 50Mb
+      max-request-size: 50Mb
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: file:${hzw.upload.base-url}
   jpa:
     database: mysql
     show-sql: true
@@ -30,3 +38,8 @@ spring:
     restart:
       enabled: true
       additional-paths: src/main/java
+
+## 自定义参数
+hzw:
+  upload:
+    base-url: "D:/JAVA/upload/hzw-xyp/"

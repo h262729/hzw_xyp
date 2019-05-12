@@ -1,6 +1,6 @@
 package com.hzw.xyp.test;
 
-import com.hzw.xyp.base.constant.RegexManage;
+import com.hzw.base.constant.RegexManage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

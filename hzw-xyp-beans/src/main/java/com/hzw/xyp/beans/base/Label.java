@@ -13,8 +13,6 @@ public class Label implements Serializable {
 
     //标签表
     private long id;
-    //所属分类id
-    private long typeId = -1;
     //标签名称
     private String name;
     //是否为管理员创建
@@ -30,11 +28,6 @@ public class Label implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
-    }
-
-    @Column(name = "type_id")
-    public long getTypeId() {
-        return typeId;
     }
 
     @Column(name = "name")
@@ -64,10 +57,6 @@ public class Label implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public void setTypeId(long typeId) {
-        this.typeId = typeId;
     }
 
     public void setName(String name) {
