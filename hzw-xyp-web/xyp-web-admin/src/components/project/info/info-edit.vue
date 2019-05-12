@@ -1,30 +1,39 @@
 <template>
     <div id="admin_edit">
       <div>
-        <span class="edit-name">基础信息 <i>(默认初始密码为：123456)</i></span>
+        <span class="edit-name">资讯信息</span>
       </div>
       <el-form :model="beanData" ref="beanData" :rules="rules" label-width="100px" >
         <el-row>
-          <el-col :span="10">
-            <el-form-item prop="name" label="用户名" :disabled="!beanData.id || beanData.id <= 0">
-              <el-input v-model="beanData.name"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="10">
-            <el-form-item prop="nickname" label="昵称">
-              <el-input v-model="beanData.nickname"></el-input>
+          <el-col>
+            <el-form-item prop="title" label="资讯标题">
+              <el-input v-model="beanData.title"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="10">
-            <el-form-item  prop="mobile" label="联系电话">
+            <el-form-item prop="mobile" label="所属分类">
               <el-input v-model="beanData.mobile"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item prop="email" label="联系邮箱">
+            <el-form-item prop="email" label="拥有标签">
               <el-input v-model="beanData.email"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-form-item label="封面图片">
+              <h-upload-image :limit="1" target="info" :target-id="id" :images-list="uploadImageList"></h-upload-image>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-form-item label="文章内容">
+              <h-editor></h-editor>
             </el-form-item>
           </el-col>
         </el-row>
@@ -35,7 +44,7 @@
           </el-form-item>
           <el-form-item size="large" v-if="id != -1">
             <el-button type="primary" @click="onSubmit()">确 认 修 改</el-button>
-            <el-button @click="initPwd()">初 始 化 密 码</el-button>
+            <el-button type="primary" @click="">关 闭</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -43,13 +52,18 @@
 </template>
 
 <script>
-  import Validate from "@/assets/common/validate.js"
+  import Validate from "@/assets/common/validate.js";
+  import HUploadImage from "@/components/commons/h-upload-image";
+  import HEditor from "@/components/commons/h-editor-wang";
+
   export default {
     name: "admin-edit",
     data() {
       return {
-        title: "新增/编辑管理员",
+        title: "新增/编辑资讯文章",
         beanData: {},
+        editor : null,
+        uploadImageList : [],
         rules : {
           name : [{required: true, message: "用户名不能为空", trigger: "blur"},{validator: Validate.userName}],
           nickname : {required: true, message: "昵称不能为空", trigger: "blur"},
@@ -60,6 +74,12 @@
     },
     created() {
       console.log("admin-edit 被加载", this.id);
+      this.uploadImageList = [
+        {mode : 1, name: "A_003.jpg", url: "images/info/0/da0b7efb650d4e1da6cda94b9111be54.jpg" },
+        {mode : 1, name: "A_005.jpg", url: "images/info/0/af40aa21c9ff4ddf80530a47f3523f06.jpg" },
+        {mode : 1, name: "A_005.jpg", url: "images/info/0/af40aa21c9ff4ddf80530a47f3523f06.jpg" },
+      ];
+
       if(this.id > 0){ // 编辑
         this.getData(this.id);
       }else{  // 新增
@@ -93,7 +113,6 @@
         if(!id || id <= 0){
           return;
         }
-
         // 发起请求获取实体数据
         let _this = this;
         this.$axios.get("admin/get", {params : {id : id}}).then(function (result) {
@@ -102,12 +121,13 @@
         }).catch(function (error) {
           console.log("错误信息", error);
         })
-
       },
 
       onSubmit : function() { // 提交表单
         let _this = this;
-        this.$refs.beanData && this.$refs.beanData.validate().then(function () {
+        console.log("获取图片集", this.uploadImageList)
+        ;
+        /*this.$refs.beanData && this.$refs.beanData.validate().then(function () {
           return _this.$axios.post("admin", _this.beanData)
         }).then(function (result) {
           _this.beanData = (result && result.beanData) || {};
@@ -119,7 +139,7 @@
           }
         }).catch(function (error) {
           return error.message && _this.FUNCS.error(error.message);
-        })
+        })*/
       },
 
       resetForm : function(formName){ // 重置表单
@@ -127,23 +147,15 @@
           this.$refs[formName] && this.$refs[formName].resetFields();
         });
       },
-
-      initPwd : function () { // 初始化密码
-        let _this = this;
-        this.$axios.post("admin/pwd/init", {id : _this.id}).then(result => {
-          _this.FUNCS.success("初始化密码成功！");
-        }).catch(error => {
-          return error.message && _this.FUNCS.error(error.message);
-        })
-      }
-
     },
     computed:{
       id : function(){
-        return this.$route.query.id || -1;
+        return this.$route.query.id || 0;
       }
     },
-    inject:['removeTab']
+    inject:['removeTab'],
+    components:{HUploadImage, HEditor},
+
   }
 </script>
 

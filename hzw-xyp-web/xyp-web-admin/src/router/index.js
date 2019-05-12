@@ -13,7 +13,9 @@ import adminView from '@/components/admin/user/admin-view';
 // 项目管理模块路由
 import projectHome from '@/components/project/project-home';
 import typeTree from '@/components/project/base/type-tree';
-import typeTreeOld from '@/components/project/base/type-tree-old';
+import labelList from '@/components/project/base/label-list';
+import infoList from '@/components/project/info/info-list';
+import infoEdit from '@/components/project/info/info-edit';
 
 
 const router = new VueRouter({
@@ -34,7 +36,11 @@ const router = new VueRouter({
         {path: "/", redirect: "project-home"},
         {path: "project-home", component: projectHome, name: "project-home", meta: {title:"首页" }},
         {path: "type-tree", component: typeTree, name: "type-tree", meta: { keepAlive: true, title:"类别管理", code:"type-tree"}},
-        {path: "type-tree-old", component: typeTreeOld, name: "type-tree-old", meta: { keepAlive: true, title:"标签管理", code:"type-tree-old"}},
+        {path: "label-list", component: labelList, name: "label-list", meta: { keepAlive: true, title:"标签管理", code:"label-list"}},
+
+        {path: "info-list", component: infoList, name: "info-list", meta: { keepAlive: true, title:"资讯文章列表", code:"info-list"}},
+        {path: "info-add", component: infoEdit, name: "info-add",   meta: { keepAlive: true, title:"资讯文章新增", code:"info-add"}},
+        {path: "info-edit", component: infoEdit, name: "info-edit",  meta: { keepAlive: true, title:"资讯文章编辑", code:"info-edit"}},
         {path: "*", component: ErrorPage},
       ]
     },

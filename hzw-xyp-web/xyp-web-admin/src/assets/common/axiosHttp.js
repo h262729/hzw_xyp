@@ -30,7 +30,7 @@ axios.interceptors.response.use(
     return config && config.data;
   },
   error => {
-    var errorData = {message : "未知错误！"};
+    let errorData = {message : "未知错误！"};
     if(error && error.response){
       errorData = error.response.data || errorData;
     }

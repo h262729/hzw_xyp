@@ -26,12 +26,12 @@ const asideMenu = {
   "project-manage" : [
     {id:4, name:"基础信息", code:"project-base", children:[
         {id:5, name:"类别管理", code:"type-tree", routerLink:"type-tree"},
-        {id:6, name:"标签管理", code:"label-list", routerLink:"type-tree-old"}
+        {id:6, name:"标签管理", code:"label-list", routerLink:"label-list"}
       ]
     },
 
     {id:7, name:"资讯管理", code:"project-info", children:[
-        {id:8, name:"资讯列表", code:"info-list", routerLink:"info-list"},
+        {id:8, name:"资讯文章", code:"info-list", routerLink:"info-list"},
         {id:9, name:"资讯评论", code:"info-comment-list", routerLink:"info-comment-list"}
       ]
     }
